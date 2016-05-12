@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -12,7 +12,8 @@ namespace AerolineaFrba
     {
 
         public static Commons commons;
-
+		
+		/// <summary>Get the instance for the commons functions</summary>
         public static Commons getInstance()
         {
             if (commons == null)
@@ -21,7 +22,11 @@ namespace AerolineaFrba
             }
             return commons;
         }
-
+		
+		/// <summary>Load the combobox executing a query with the given parameters</summary>
+		/// <param name="entidad">Name of the table</param>
+		/// <param name="atributo">Name of the field to select</param>
+		/// <param name="comboBox">Name of the combo box to insert the results</param>
         public void cargarComboBox(string entidad, string atributo, ComboBox comboBox)
         {
             SqlDataReader respuesta;
@@ -35,7 +40,12 @@ namespace AerolineaFrba
             }
             respuesta.Close();
         }
-
+		
+		/// <summary>Load the combobox executing a query with the given parameters, using a where statement</summary>
+		/// <param name="entidad">Name of the table</param>
+		/// <param name="atributo">Name of the field to select</param>
+		/// <param name="comboBox">Name of the combo box to insert the results</param>
+		/// <param name="where">Condition to include in the query</param>
         public void cargarComboBoxWhere(string entidad, string atributo, ComboBox comboBox, string where)
         {
             SqlDataReader respuesta;
@@ -49,7 +59,11 @@ namespace AerolineaFrba
             }
             respuesta.Close();
         }
-
+	
+		/// <summary>Load the combobox executing a query with the given parameters, using the order by statement</summary>
+		/// <param name="entidad">Name of the table</param>
+		/// <param name="atributo">Name of the field to select</param>
+		/// <param name="comboBox">Name of the combo box to insert the results</param>
         public void cargarComboBoxOrderBy(string entidad, string atributo, ComboBox comboBox)
         {
             SqlDataReader respuesta;
@@ -63,7 +77,11 @@ namespace AerolineaFrba
             }
             respuesta.Close();
         }
-
+		
+		/// <summary>Select an ID from a table of a specific attribute</summary>
+		/// <param name="function">The SQL function to execute</param>
+		/// <param name="atributo">Name of the field to get the ID</param>
+		/// <returns>The id of the given field in the table<returns>
         public int getIDFrom(string function, string atributo)
         {
             SqlDataReader reader;
@@ -75,17 +93,9 @@ namespace AerolineaFrba
             return id;
         }
 
-        public string getNombreFrom(string function, int id)
-        {
-            SqlDataReader reader;
-            string query = "SELECT JUST_DO_IT." + function + "(" + id + ") AS nombre";
-            reader = Server.getInstance().query(query);
-            reader.Read();
-            string nombre = reader["nombre"].ToString();
-            reader.Close();
-            return nombre;
-        }
-
+		/// <summary>Get the selected row in a DataGridView</summary>
+		/// <param name="dataGrid">The data grid to get the selected row</param>
+		/// <returns>The selected row<returns>
         public DataGridViewRow getSelectedRow(DataGridView dataGrid)
         {
             foreach (DataGridViewRow row in dataGrid.SelectedRows)
